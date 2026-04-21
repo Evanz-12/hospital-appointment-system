@@ -61,29 +61,32 @@ include '../includes/sidebar-patient.php';
 
   <?php if (empty($doctors)): ?>
     <div class="empty-state">
-      <i class="fa fa-user-slash"></i>
-      <p>No doctors available in this department right now. Please try another department.</p>
+      <div class="empty-icon"><i class="fa fa-user-slash"></i></div>
+      <h3>No doctors available</h3>
+      <p>No doctors are available in this department right now. Please try another department.</p>
     </div>
   <?php else: ?>
-  <div style="display:flex;flex-direction:column;gap:14px;">
-    <?php foreach ($doctors as $doc): ?>
-    <div style="background:var(--bg);border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:18px;border:1.5px solid var(--border);">
-      <div style="width:52px;height:52px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--primary);flex-shrink:0;">
-        <i class="fa fa-user-md"></i>
+  <div class="doctor-grid">
+    <?php foreach ($doctors as $doc):
+      $words = explode(' ', trim($doc['full_name']));
+      $ini = '';
+      foreach ($words as $w) { if (!empty($w)) $ini .= strtoupper($w[0]); if (strlen($ini) >= 2) break; }
+    ?>
+    <div class="doctor-card">
+      <div class="doctor-avatar"><?= htmlspecialchars($ini) ?></div>
+      <h3><?= htmlspecialchars($doc['full_name']) ?></h3>
+      <div class="doctor-spec"><?= htmlspecialchars($doc['specialisation'] ?? 'General') ?></div>
+      <div class="doctor-dept">
+        <i class="fa fa-calendar-week"></i> <?= htmlspecialchars($doc['available_days']) ?>
+        &nbsp;&middot;&nbsp; <?= $doc['slot_duration'] ?>-min slots
       </div>
-      <div style="flex:1;">
-        <h3 style="font-size:.95rem;font-weight:700;font-family:'DM Sans',sans-serif;"><?= htmlspecialchars($doc['full_name']) ?></h3>
-        <p style="font-size:.82rem;color:var(--text-muted);"><?= htmlspecialchars($doc['specialisation'] ?? '') ?></p>
-        <?php if ($doc['bio']): ?>
-          <p style="font-size:.8rem;color:var(--text-muted);margin-top:4px;"><?= htmlspecialchars(substr($doc['bio'], 0, 120)) ?>…</p>
-        <?php endif; ?>
-        <p style="font-size:.78rem;color:var(--primary);margin-top:5px;">
-          <i class="fa fa-calendar-week"></i> <?= htmlspecialchars($doc['available_days']) ?> &nbsp;
-          <i class="fa fa-clock"></i> <?= $doc['slot_duration'] ?>-min slots
+      <?php if ($doc['bio']): ?>
+        <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:14px;line-height:1.5;">
+          <?= htmlspecialchars(substr($doc['bio'], 0, 100)) ?>…
         </p>
-      </div>
+      <?php endif; ?>
       <a href="<?= BASE_URL ?>/patient/book-slot.php?doctor_id=<?= $doc['id'] ?>" class="btn btn-primary btn-sm">
-        Select <i class="fa fa-chevron-right"></i>
+        Select Doctor <i class="fa fa-chevron-right"></i>
       </a>
     </div>
     <?php endforeach; ?>

@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($password !== $confirm_password) {
             $error = 'Passwords do not match.';
         } else {
-            // Check for duplicate email
             $stmt = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ?");
             mysqli_stmt_bind_param($stmt, 's', $email);
             mysqli_stmt_execute($stmt);
@@ -62,26 +61,51 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register — Hospital Appointment System</title>
+  <title>Create Account — MediBook</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/main.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/auth.css">
 </head>
 <body class="auth-page">
 
-<div class="auth-container" style="max-width:480px;">
-  <div class="auth-brand">
-    <i class="fa fa-hospital-o"></i>
+<!-- Left Panel -->
+<div class="auth-left">
+  <div class="auth-deco-circle"></div>
+  <div class="auth-brand-panel">
+    <div class="logo-mark"><i class="fa fa-hospital-o"></i></div>
     <h1>MediBook</h1>
-    <p>Hospital Appointment Booking System</p>
+    <p>Crawford University Hospital<br>Appointment Booking System</p>
   </div>
+  <div class="auth-quote">
+    <blockquote>"Wherever the art of medicine is loved, there is also a love of humanity."</blockquote>
+    <cite>— Hippocrates</cite>
+  </div>
+  <div class="auth-features">
+    <div class="auth-feature-item">
+      <i class="fa fa-user-md"></i>
+      Access specialist doctors
+    </div>
+    <div class="auth-feature-item">
+      <i class="fa fa-clock"></i>
+      Choose convenient time slots
+    </div>
+    <div class="auth-feature-item">
+      <i class="fa fa-envelope"></i>
+      Get email confirmations
+    </div>
+  </div>
+</div>
 
-  <div class="auth-card">
-    <h2>Create your account</h2>
-    <p class="auth-subtitle">Register to book appointments online</p>
+<!-- Right Panel -->
+<div class="auth-right">
+  <div class="auth-form-wrap">
+    <div class="auth-form-header">
+      <h2>Create your account</h2>
+      <p>Register as a patient to book appointments online</p>
+    </div>
 
     <?php if ($error): ?>
       <div class="error-msg"><i class="fa fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?></div>
@@ -98,8 +122,8 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         <label for="full_name">Full Name</label>
         <div class="input-wrap">
           <i class="fa fa-user"></i>
-          <input type="text" id="full_name" name="full_name" placeholder="John Doe"
-                 value="<?= htmlspecialchars($_POST['full_name'] ?? '') ?>" required>
+          <input type="text" id="full_name" name="full_name" placeholder="e.g. John Adeyemi"
+                 value="<?= htmlspecialchars($_POST['full_name'] ?? '') ?>" required autocomplete="name">
         </div>
       </div>
 
@@ -108,16 +132,16 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         <div class="input-wrap">
           <i class="fa fa-envelope"></i>
           <input type="email" id="email" name="email" placeholder="you@example.com"
-                 value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
+                 value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required autocomplete="email">
         </div>
       </div>
 
       <div class="form-group">
-        <label for="phone">Phone Number <span style="color:var(--text-muted);font-weight:400">(optional)</span></label>
+        <label for="phone">Phone Number <span style="color:var(--text-muted);font-weight:400;font-size:.78rem">(optional)</span></label>
         <div class="input-wrap">
           <i class="fa fa-phone"></i>
           <input type="tel" id="phone" name="phone" placeholder="08012345678"
-                 value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
+                 value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>" autocomplete="tel">
         </div>
       </div>
 
@@ -142,6 +166,12 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         <i class="fa fa-user-plus"></i> Create Account
       </button>
     </form>
+    <?php endif; ?>
+
+    <?php if ($success): ?>
+      <a href="<?= BASE_URL ?>/auth/login.php" class="auth-btn" style="margin-top:16px;">
+        <i class="fa fa-sign-in-alt"></i> Go to Sign In
+      </a>
     <?php endif; ?>
 
     <div class="auth-footer">

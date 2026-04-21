@@ -49,7 +49,7 @@ include '../includes/sidebar-admin.php';
 
 <div class="card">
   <?php if (empty($patients)): ?>
-    <div class="empty-state"><i class="fa fa-users"></i><p>No patients found.</p></div>
+    <div class="empty-state"><div class="empty-icon"><i class="fa fa-users"></i></div><h3>No patients found</h3><p>Patients will appear here once they register.</p></div>
   <?php else: ?>
   <div class="table-wrapper">
     <table>

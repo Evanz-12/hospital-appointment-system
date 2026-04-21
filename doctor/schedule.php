@@ -97,7 +97,8 @@ endfor;
 
 if (!$has_any): ?>
 <div class="empty-state">
-  <i class="fa fa-calendar-week"></i>
+  <div class="empty-icon"><i class="fa fa-calendar-week"></i></div>
+  <h3>Clear week ahead</h3>
   <p>No appointments scheduled for this week.</p>
 </div>
 <?php endif; ?>

@@ -5,9 +5,8 @@
   var flash = document.getElementById('flashMsg');
   if (flash) {
     setTimeout(function () {
-      flash.style.transition = 'opacity .5s';
-      flash.style.opacity = '0';
-      setTimeout(function () { flash.remove(); }, 500);
+      flash.style.animation = 'flashSlideOut .4s ease forwards';
+      setTimeout(function () { flash.remove(); }, 400);
     }, 4000);
   }
 })();

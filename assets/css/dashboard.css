@@ -1,28 +1,56 @@
 /* =========================================================
-   dashboard.css — Dashboard layout & widget styles
+   dashboard.css — Dashboard widgets, booking flow, schedule
    ========================================================= */
 
-/* --- Welcome banner --- */
+/* ── Dashboard Greeting ─────────────────────────────────── */
+.dash-greeting {
+  margin-bottom: 28px;
+}
+.dash-greeting h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -.03em;
+}
+.dash-greeting p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── Welcome banner (alt style for some dashboards) ─────── */
 .welcome-banner {
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  color: var(--white);
-  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: #fff;
+  border-radius: var(--radius-lg);
   padding: 28px 28px;
   margin-bottom: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.welcome-banner::after {
+  content: '';
+  position: absolute;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,.06);
+  border-radius: 50%;
+  right: -40px; top: -60px;
 }
 .welcome-banner h2 {
-  font-size: 1.35rem;
-  font-family: 'Playfair Display', serif;
-  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: #fff;
+  letter-spacing: -.02em;
 }
-.welcome-banner p { font-size: 0.88rem; opacity: .8; margin-top: 4px; }
-.welcome-banner .banner-icon { font-size: 3.5rem; opacity: .3; }
+.welcome-banner p { font-size: 0.85rem; opacity: .75; margin-top: 5px; }
+.welcome-banner .banner-icon { font-size: 3rem; opacity: .2; position: relative; z-index: 1; }
 
-/* --- Quick actions row --- */
+/* ── Quick Actions ──────────────────────────────────────── */
 .quick-actions {
   display: flex;
   gap: 14px;
@@ -32,97 +60,149 @@
 .quick-action-card {
   flex: 1;
   min-width: 140px;
-  background: var(--white);
-  border-radius: var(--radius);
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
   padding: 18px 16px;
   text-align: center;
-  box-shadow: var(--shadow);
-  border: 2px solid transparent;
-  transition: border-color .2s, box-shadow .2s;
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--border);
+  transition: border-color .2s, box-shadow .2s, transform .2s;
   cursor: pointer;
   text-decoration: none;
-  color: var(--text-main);
+  color: var(--text-primary);
 }
 .quick-action-card:hover {
   border-color: var(--primary);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
   color: var(--primary);
 }
-.quick-action-card i { font-size: 1.7rem; color: var(--primary); margin-bottom: 8px; }
-.quick-action-card span { font-size: 0.83rem; font-weight: 600; display: block; }
+.quick-action-card i { font-size: 1.5rem; color: var(--primary); margin-bottom: 8px; display: block; }
+.quick-action-card span { font-size: 0.82rem; font-weight: 600; }
 
-/* --- Two-column grid for dashboard sections --- */
+/* ── Dashboard Grid ─────────────────────────────────────── */
 .dash-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
 
-/* --- Appointment mini-list on dashboard --- */
-.appt-mini-list { display: flex; flex-direction: column; gap: 10px; }
+/* ── Appointment Mini-list ──────────────────────────────── */
+.appt-mini-list { display: flex; flex-direction: column; gap: 8px; }
 .appt-mini-item {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 12px 14px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   background: var(--bg);
-  border-left: 4px solid var(--primary);
+  border-left: 3px solid var(--border-strong);
+  transition: background .15s;
 }
+.appt-mini-item:hover { background: var(--primary-light); }
 .appt-mini-item.status-pending   { border-left-color: var(--warning); }
 .appt-mini-item.status-approved  { border-left-color: var(--success); }
 .appt-mini-item.status-declined  { border-left-color: var(--danger); }
-.appt-mini-item.status-completed { border-left-color: #2563EB; }
-.appt-mini-item.status-cancelled { border-left-color: #9CA3AF; }
+.appt-mini-item.status-completed { border-left-color: var(--primary); }
+.appt-mini-item.status-cancelled { border-left-color: var(--text-muted); }
 
 .appt-mini-date {
   text-align: center;
-  min-width: 44px;
+  min-width: 40px;
+  flex-shrink: 0;
 }
-.appt-mini-date .day  { font-size: 1.25rem; font-weight: 700; color: var(--primary); line-height: 1; }
-.appt-mini-date .mon  { font-size: 0.7rem;  color: var(--text-muted); text-transform: uppercase; }
-.appt-mini-info h4    { font-size: 0.88rem; font-weight: 600; font-family: 'DM Sans', sans-serif; }
-.appt-mini-info p     { font-size: 0.78rem; color: var(--text-muted); }
+.appt-mini-date .day  { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--primary); line-height: 1; }
+.appt-mini-date .mon  { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-top: 1px; }
+.appt-mini-info h4    { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
+.appt-mini-info p     { font-size: 0.78rem; color: var(--text-muted); margin-top: 1px; }
+.appt-mini-badge      { margin-left: auto; flex-shrink: 0; }
 
-/* --- Doctor schedule day view --- */
-.schedule-day {
-  border-left: 3px solid var(--primary);
-  padding-left: 16px;
-  margin-bottom: 20px;
+/* ── Doctor Schedule Timeline ───────────────────────────── */
+.timeline { display: flex; flex-direction: column; }
+.timeline-item {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
 }
-.schedule-day h3 {
-  font-size: 0.92rem;
+.timeline-item:last-child { border-bottom: none; }
+.timeline-time {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--primary);
-  margin-bottom: 10px;
-  font-family: 'DM Sans', sans-serif;
+  min-width: 56px;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+.timeline-body { flex: 1; }
+.timeline-body h4 { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.timeline-body p  { font-size: 0.78rem; color: var(--text-muted); }
+.timeline-badge   { flex-shrink: 0; }
+
+/* ── Schedule page: Doctor's weekly table ───────────────── */
+.schedule-day {
+  margin-bottom: 28px;
+}
+.schedule-day-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary-light);
+}
+.schedule-day-header h3 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary);
   text-transform: uppercase;
-  letter-spacing: .05em;
+  letter-spacing: .06em;
+}
+.schedule-day-header .day-date {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
 }
 .schedule-slot {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 10px 12px;
-  border-radius: var(--radius);
-  background: var(--white);
-  box-shadow: var(--shadow);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-white);
+  box-shadow: var(--shadow-xs);
+  border: 1px solid var(--border);
   margin-bottom: 8px;
+  transition: border-color .15s;
 }
+.schedule-slot:hover { border-color: var(--primary-light); }
 .schedule-slot-time {
-  font-size: 0.8rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--primary);
-  min-width: 52px;
+  min-width: 56px;
+  flex-shrink: 0;
 }
-.schedule-slot-info h4 { font-size: 0.88rem; font-weight: 600; font-family: 'DM Sans', sans-serif; }
-.schedule-slot-info p  { font-size: 0.77rem; color: var(--text-muted); }
+.schedule-slot-info h4 { font-size: 0.875rem; font-weight: 600; }
+.schedule-slot-info p  { font-size: 0.77rem; color: var(--text-muted); margin-top: 1px; }
 
-/* --- Booking step indicator --- */
+/* ── Booking Step Indicator ─────────────────────────────── */
 .step-indicator {
   display: flex;
   align-items: center;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
+  padding: 24px 24px 20px;
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
 }
 .step {
   display: flex;
@@ -134,154 +214,306 @@
 .step:not(:last-child)::after {
   content: '';
   position: absolute;
-  top: 18px;
-  left: 50%;
-  width: 100%;
+  top: 20px;
+  left: calc(50% + 20px);
+  right: calc(-50% + 20px);
   height: 2px;
   background: var(--border);
   z-index: 0;
 }
-.step.completed::after { background: var(--primary); }
+.step.completed::after { background: var(--accent); }
+.step.active::after    { background: var(--border); }
+
 .step-circle {
-  width: 36px; height: 36px;
+  width: 40px; height: 40px;
   border-radius: 50%;
-  background: var(--border);
+  background: var(--bg);
+  border: 2px solid var(--border);
   color: var(--text-muted);
   display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 700;
   position: relative;
   z-index: 1;
-  transition: background .2s, color .2s;
+  transition: all .2s;
 }
-.step.active   .step-circle { background: var(--primary); color: var(--white); }
-.step.completed .step-circle { background: var(--success); color: var(--white); }
+.step.active .step-circle {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(0,102,204,.15);
+}
+.step.completed .step-circle {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
 .step-label {
   font-size: 0.72rem;
   color: var(--text-muted);
-  margin-top: 6px;
+  margin-top: 8px;
   text-align: center;
   font-weight: 500;
+  white-space: nowrap;
 }
-.step.active   .step-label { color: var(--primary); font-weight: 700; }
-.step.completed .step-label { color: var(--success); }
+.step.active .step-label    { color: var(--primary); font-weight: 700; }
+.step.completed .step-label { color: var(--accent); font-weight: 600; }
 
-/* --- Doctor / department selection cards --- */
+/* ── Department / Doctor Select Cards ───────────────────── */
 .select-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
 .select-card {
-  background: var(--white);
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 16px;
+  background: var(--bg-white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 18px;
   text-align: center;
   cursor: pointer;
-  transition: border-color .2s, box-shadow .2s;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
   text-decoration: none;
-  color: var(--text-main);
+  color: var(--text-primary);
   display: block;
 }
 .select-card:hover, .select-card.selected {
   border-color: var(--primary);
-  box-shadow: 0 4px 16px rgba(26,107,138,.15);
+  box-shadow: 0 4px 20px rgba(0,102,204,.12);
+  transform: translateY(-2px);
   color: var(--primary);
 }
-.select-card i    { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
-.select-card h3   { font-size: 0.92rem; font-weight: 700; font-family: 'DM Sans', sans-serif; }
-.select-card p    { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+.select-card i    { font-size: 1.8rem; color: var(--primary); margin-bottom: 12px; display: block; }
+.select-card h3   { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; color: var(--text-primary); }
+.select-card p    { font-size: 0.77rem; color: var(--text-muted); margin-top: 5px; }
+.select-card .dept-count {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--accent-light);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
 
-/* --- Time slot picker --- */
+/* ── Doctor Cards (book-doctor.php) ─────────────────────── */
+.doctor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.doctor-card {
+  background: var(--bg-white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.doctor-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+.doctor-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+.doctor-card h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.doctor-card .doctor-spec {
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.doctor-card .doctor-dept {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.doctor-card .btn { width: 100%; justify-content: center; }
+
+/* ── Time Slot Picker ───────────────────────────────────── */
 .slot-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   margin-top: 14px;
 }
 .slot-btn {
-  padding: 8px 16px;
+  padding: 9px 18px;
   border: 1.5px solid var(--border);
-  border-radius: 50px;
-  background: var(--white);
-  font-size: 0.83rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-white);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
   font-weight: 600;
-  color: var(--text-main);
+  color: var(--text-primary);
   cursor: pointer;
-  transition: all .18s;
+  transition: all .15s;
 }
 .slot-btn:hover, .slot-btn.active {
   background: var(--primary);
   border-color: var(--primary);
-  color: var(--white);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,102,204,.25);
 }
 .slot-btn.taken {
-  background: #F3F4F6;
-  border-color: #E5E7EB;
-  color: #9CA3AF;
+  background: var(--bg);
+  border-color: var(--border);
+  color: var(--text-muted);
   cursor: not-allowed;
   text-decoration: line-through;
+  opacity: .6;
 }
 
-/* --- Booking confirmation card --- */
+/* ── Booking Confirmation Card ──────────────────────────── */
 .confirm-card {
-  background: var(--white);
-  border-radius: 12px;
-  padding: 28px;
-  box-shadow: var(--shadow);
-  max-width: 540px;
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  max-width: 560px;
   margin: 0 auto;
 }
-.confirm-card h2 { font-size: 1.2rem; margin-bottom: 20px; }
+.confirm-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+  letter-spacing: -.02em;
+}
+.confirm-card .confirm-subtitle {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
 .confirm-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 11px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 0.88rem;
+  font-size: 0.875rem;
 }
 .confirm-row:last-of-type { border-bottom: none; }
 .confirm-row span:first-child { color: var(--text-muted); font-weight: 500; }
-.confirm-row span:last-child  { font-weight: 600; }
+.confirm-row span:last-child  { font-weight: 600; color: var(--text-primary); }
 
-/* --- Availability calendar --- */
+/* ── Availability Calendar ──────────────────────────────── */
+.avail-calendar-wrap {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.avail-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.avail-cal-nav h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
 .avail-calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  padding: 16px;
   gap: 6px;
 }
 .avail-day-header {
   text-align: center;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
   color: var(--text-muted);
   padding: 4px;
   text-transform: uppercase;
+  letter-spacing: .05em;
 }
 .avail-day {
   aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
   border: 1.5px solid var(--border);
-  background: var(--white);
-  transition: all .18s;
+  background: var(--bg-white);
+  transition: all .15s;
+  font-family: var(--font-body);
 }
-.avail-day:hover    { border-color: var(--primary); color: var(--primary); }
-.avail-day.unavail  { background: #FEF2F2; border-color: #FECACA; color: var(--danger); }
-.avail-day.past     { opacity: .35; cursor: default; pointer-events: none; }
-.avail-day.today    { border-color: var(--primary); font-weight: 700; color: var(--primary); }
+.avail-day:hover    { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+.avail-day.unavail  { background: var(--danger-light); border-color: #FECACA; color: var(--danger); }
+.avail-day.past     { opacity: .3; cursor: default; pointer-events: none; }
+.avail-day.today    { border-color: var(--primary); font-weight: 700; color: var(--primary); box-shadow: 0 0 0 2px var(--primary-light); }
 .avail-day.empty    { border-color: transparent; cursor: default; }
+
+.avail-legend {
+  display: flex;
+  gap: 16px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.legend-dot {
+  width: 12px; height: 12px;
+  border-radius: 3px;
+  border: 1.5px solid var(--border);
+}
+.legend-dot.available  { background: var(--bg-white); }
+.legend-dot.unavailable { background: var(--danger-light); border-color: #FECACA; }
 
 @media (max-width: 768px) {
   .dash-grid      { grid-template-columns: 1fr; }
   .welcome-banner { flex-direction: column; text-align: center; }
   .welcome-banner .banner-icon { display: none; }
+  .doctor-grid    { grid-template-columns: 1fr 1fr; }
+  .step-indicator { padding: 16px 12px; }
+  .step-label     { display: none; }
+}
+@media (max-width: 480px) {
+  .doctor-grid  { grid-template-columns: 1fr; }
+  .confirm-card { padding: 20px 16px; }
 }

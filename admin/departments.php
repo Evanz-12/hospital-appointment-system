@@ -170,14 +170,12 @@ include '../includes/sidebar-admin.php';
 <!-- Delete confirm modal -->
 <div class="modal-overlay" id="confirmModal">
   <div class="modal">
-    <div style="width:52px;height:52px;background:#FEF2F2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.4rem;color:var(--danger);">
-      <i class="fa fa-trash"></i>
-    </div>
+    <div class="modal-icon danger"><i class="fa fa-trash"></i></div>
     <h3>Delete Department?</h3>
     <p id="confirmModalMsg">This action cannot be undone.</p>
     <div class="modal-actions">
       <button class="btn btn-danger" id="confirmModalOk">Yes, Delete</button>
-      <button class="btn btn-outline" onclick="closeModal('confirmModal')">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeModal('confirmModal')">Cancel</button>
     </div>
   </div>
 </div>

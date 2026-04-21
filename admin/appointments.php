@@ -88,7 +88,7 @@ include '../includes/sidebar-admin.php';
 
 <div class="card">
   <?php if (empty($appointments)): ?>
-    <div class="empty-state"><i class="fa fa-calendar-times"></i><p>No appointments found matching your filters.</p></div>
+    <div class="empty-state"><div class="empty-icon"><i class="fa fa-calendar-times"></i></div><h3>No appointments found</h3><p>Try adjusting your filters.</p></div>
   <?php else: ?>
   <div class="table-wrapper">
     <table>

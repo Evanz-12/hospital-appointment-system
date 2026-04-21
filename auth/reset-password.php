@@ -68,23 +68,32 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
   <title>Reset Password — MediBook</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/main.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/auth.css">
 </head>
 <body class="auth-page">
 
-<div class="auth-container">
-  <div class="auth-brand">
-    <i class="fa fa-hospital-o"></i>
+<div class="auth-left">
+  <div class="auth-deco-circle"></div>
+  <div class="auth-brand-panel">
+    <div class="logo-mark"><i class="fa fa-hospital-o"></i></div>
     <h1>MediBook</h1>
-    <p>Hospital Appointment Booking System</p>
+    <p>Crawford University Hospital<br>Appointment Booking System</p>
   </div>
+  <div class="auth-quote">
+    <blockquote>"The good physician treats the disease; the great physician treats the patient who has the disease."</blockquote>
+    <cite>— William Osler</cite>
+  </div>
+</div>
 
-  <div class="auth-card">
-    <h2>Set New Password</h2>
-    <p class="auth-subtitle">Choose a strong password for your account.</p>
+<div class="auth-right">
+  <div class="auth-form-wrap">
+    <div class="auth-form-header">
+      <h2>Set New Password</h2>
+      <p>Choose a strong password for your account.</p>
+    </div>
 
     <?php if ($error): ?>
       <div class="error-msg"><i class="fa fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?></div>
@@ -120,8 +129,8 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
     <div class="auth-footer">
       <?php if ($success): ?>
-        <a href="<?= BASE_URL ?>/auth/login.php" class="auth-btn" style="display:block;text-align:center;text-decoration:none;">
-          <i class="fa fa-sign-in-alt"></i> Go to Login
+        <a href="<?= BASE_URL ?>/auth/login.php" class="auth-btn" style="margin-top:12px;">
+          <i class="fa fa-sign-in-alt"></i> Go to Sign In
         </a>
       <?php else: ?>
         <a href="<?= BASE_URL ?>/auth/forgot-password.php">Request a new reset link</a>

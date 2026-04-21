@@ -46,7 +46,7 @@ include '../includes/sidebar-admin.php';
 
 <div class="card">
   <?php if (empty($doctors)): ?>
-    <div class="empty-state"><i class="fa fa-user-md"></i><p>No doctors found. <a href="<?= BASE_URL ?>/admin/add-doctor.php">Add one.</a></p></div>
+    <div class="empty-state"><div class="empty-icon"><i class="fa fa-user-md"></i></div><h3>No doctors yet</h3><p><a href="<?= BASE_URL ?>/admin/add-doctor.php">Add your first doctor</a> to get started.</p></div>
   <?php else: ?>
   <div class="table-wrapper">
     <table>

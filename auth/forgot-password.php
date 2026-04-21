@@ -51,23 +51,32 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
   <title>Forgot Password — MediBook</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/main.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/auth.css">
 </head>
 <body class="auth-page">
 
-<div class="auth-container">
-  <div class="auth-brand">
-    <i class="fa fa-hospital-o"></i>
+<div class="auth-left">
+  <div class="auth-deco-circle"></div>
+  <div class="auth-brand-panel">
+    <div class="logo-mark"><i class="fa fa-hospital-o"></i></div>
     <h1>MediBook</h1>
-    <p>Hospital Appointment Booking System</p>
+    <p>Crawford University Hospital<br>Appointment Booking System</p>
   </div>
+  <div class="auth-quote">
+    <blockquote>"The good physician treats the disease; the great physician treats the patient who has the disease."</blockquote>
+    <cite>— William Osler</cite>
+  </div>
+</div>
 
-  <div class="auth-card">
-    <h2>Forgot Password?</h2>
-    <p class="auth-subtitle">Enter your email and we'll send you a reset link.</p>
+<div class="auth-right">
+  <div class="auth-form-wrap">
+    <div class="auth-form-header">
+      <h2>Forgot Password?</h2>
+      <p>Enter your email and we'll send you a reset link.</p>
+    </div>
 
     <?php if ($error): ?>
       <div class="error-msg"><i class="fa fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?></div>
@@ -94,7 +103,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     <?php endif; ?>
 
     <div class="auth-footer">
-      <a href="<?= BASE_URL ?>/auth/login.php"><i class="fa fa-arrow-left"></i> Back to Login</a>
+      <a href="<?= BASE_URL ?>/auth/login.php"><i class="fa fa-arrow-left"></i> Back to Sign In</a>
     </div>
   </div>
 </div>

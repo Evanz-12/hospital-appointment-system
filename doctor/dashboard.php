@@ -84,8 +84,9 @@ include '../includes/sidebar-doctor.php';
   </div>
   <?php if (empty($today_appts)): ?>
     <div class="empty-state">
-      <i class="fa fa-calendar-check"></i>
-      <p>No appointments scheduled for today.</p>
+      <div class="empty-icon"><i class="fa fa-calendar-check"></i></div>
+      <h3>No appointments today</h3>
+      <p>You have a clear schedule for today.</p>
     </div>
   <?php else: ?>
   <div class="table-wrapper">

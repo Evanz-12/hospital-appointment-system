@@ -62,8 +62,9 @@ include '../includes/sidebar-patient.php';
 <div class="card">
   <?php if (empty($appointments)): ?>
     <div class="empty-state">
-      <i class="fa fa-calendar-times"></i>
-      <p>No appointments found. <a href="<?= BASE_URL ?>/patient/book.php">Book your first appointment.</a></p>
+      <div class="empty-icon"><i class="fa fa-calendar-times"></i></div>
+      <h3>No appointments found</h3>
+      <p><a href="<?= BASE_URL ?>/patient/book.php">Book your first appointment</a> to get started.</p>
     </div>
   <?php else: ?>
   <div class="table-wrapper">
@@ -114,11 +115,12 @@ include '../includes/sidebar-patient.php';
 <!-- Confirm cancel modal -->
 <div class="modal-overlay" id="confirmModal">
   <div class="modal">
+    <div class="modal-icon danger"><i class="fa fa-calendar-times"></i></div>
     <h3>Cancel Appointment?</h3>
-    <p>This action cannot be undone. The time slot will be released back for other patients.</p>
+    <p id="confirmModalMsg">This action cannot be undone. The time slot will be released back for other patients.</p>
     <div class="modal-actions">
       <button class="btn btn-danger" id="confirmModalOk">Yes, Cancel It</button>
-      <button class="btn btn-outline" onclick="closeModal('confirmModal')">Keep It</button>
+      <button class="btn btn-ghost" onclick="closeModal('confirmModal')">Keep It</button>
     </div>
   </div>
 </div>

@@ -2,7 +2,6 @@
 session_start();
 require_once '../config.php';
 
-// Already logged in — redirect to their dashboard
 if (isset($_SESSION['user_id'])) {
     $role = $_SESSION['role'];
     if ($role === 'admin')   { header("Location: " . BASE_URL . "/admin/dashboard.php");   exit(); }
@@ -13,7 +12,6 @@ if (isset($_SESSION['user_id'])) {
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // CSRF check
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         $error = 'Invalid request. Please try again.';
     } else {
@@ -50,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Generate CSRF token
 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 ?>
 <!DOCTYPE html>
@@ -58,26 +55,51 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login — Hospital Appointment System</title>
+  <title>Sign In — MediBook</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/main.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/auth.css">
 </head>
 <body class="auth-page">
 
-<div class="auth-container">
-  <div class="auth-brand">
-    <i class="fa fa-hospital-o"></i>
+<!-- Left Panel -->
+<div class="auth-left">
+  <div class="auth-deco-circle"></div>
+  <div class="auth-brand-panel">
+    <div class="logo-mark"><i class="fa fa-hospital-o"></i></div>
     <h1>MediBook</h1>
-    <p>Hospital Appointment Booking System</p>
+    <p>Crawford University Hospital<br>Appointment Booking System</p>
   </div>
+  <div class="auth-quote">
+    <blockquote>"The good physician treats the disease; the great physician treats the patient who has the disease."</blockquote>
+    <cite>— William Osler</cite>
+  </div>
+  <div class="auth-features">
+    <div class="auth-feature-item">
+      <i class="fa fa-calendar-check"></i>
+      Book appointments in minutes
+    </div>
+    <div class="auth-feature-item">
+      <i class="fa fa-bell"></i>
+      Email confirmations & reminders
+    </div>
+    <div class="auth-feature-item">
+      <i class="fa fa-shield-alt"></i>
+      Secure & private health records
+    </div>
+  </div>
+</div>
 
-  <div class="auth-card">
-    <h2>Welcome back</h2>
-    <p class="auth-subtitle">Sign in to your account to continue</p>
+<!-- Right Panel -->
+<div class="auth-right">
+  <div class="auth-form-wrap">
+    <div class="auth-form-header">
+      <h2>Welcome back</h2>
+      <p>Sign in to your MediBook account to continue</p>
+    </div>
 
     <?php if ($error): ?>
       <div class="error-msg"><i class="fa fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?></div>
@@ -103,8 +125,8 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         </div>
       </div>
 
-      <div style="text-align:right;margin-bottom:10px;">
-        <a href="<?= BASE_URL ?>/auth/forgot-password.php" style="font-size:.82rem;color:var(--text-muted);">Forgot password?</a>
+      <div class="auth-forgot">
+        <a href="<?= BASE_URL ?>/auth/forgot-password.php">Forgot password?</a>
       </div>
 
       <button type="submit" class="auth-btn">
@@ -113,7 +135,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     </form>
 
     <div class="auth-footer">
-      Don't have an account? <a href="<?= BASE_URL ?>/auth/register.php">Register as Patient</a>
+      Don't have an account? <a href="<?= BASE_URL ?>/auth/register.php">Create one free</a>
     </div>
   </div>
 </div>
