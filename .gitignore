@@ -1,0 +1,9 @@
+# Claude Code
+.claude/
+
+# Sensitive config (keep config.php out of public repos)
+# config.php
+
+# OS
+.DS_Store
+Thumbs.db
