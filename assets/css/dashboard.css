@@ -1,0 +1,287 @@
+/* =========================================================
+   dashboard.css — Dashboard layout & widget styles
+   ========================================================= */
+
+/* --- Welcome banner --- */
+.welcome-banner {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: var(--white);
+  border-radius: 12px;
+  padding: 28px 28px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.welcome-banner h2 {
+  font-size: 1.35rem;
+  font-family: 'Playfair Display', serif;
+  color: var(--white);
+}
+.welcome-banner p { font-size: 0.88rem; opacity: .8; margin-top: 4px; }
+.welcome-banner .banner-icon { font-size: 3.5rem; opacity: .3; }
+
+/* --- Quick actions row --- */
+.quick-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.quick-action-card {
+  flex: 1;
+  min-width: 140px;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 2px solid transparent;
+  transition: border-color .2s, box-shadow .2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-main);
+}
+.quick-action-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+  color: var(--primary);
+}
+.quick-action-card i { font-size: 1.7rem; color: var(--primary); margin-bottom: 8px; }
+.quick-action-card span { font-size: 0.83rem; font-weight: 600; display: block; }
+
+/* --- Two-column grid for dashboard sections --- */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* --- Appointment mini-list on dashboard --- */
+.appt-mini-list { display: flex; flex-direction: column; gap: 10px; }
+.appt-mini-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  background: var(--bg);
+  border-left: 4px solid var(--primary);
+}
+.appt-mini-item.status-pending   { border-left-color: var(--warning); }
+.appt-mini-item.status-approved  { border-left-color: var(--success); }
+.appt-mini-item.status-declined  { border-left-color: var(--danger); }
+.appt-mini-item.status-completed { border-left-color: #2563EB; }
+.appt-mini-item.status-cancelled { border-left-color: #9CA3AF; }
+
+.appt-mini-date {
+  text-align: center;
+  min-width: 44px;
+}
+.appt-mini-date .day  { font-size: 1.25rem; font-weight: 700; color: var(--primary); line-height: 1; }
+.appt-mini-date .mon  { font-size: 0.7rem;  color: var(--text-muted); text-transform: uppercase; }
+.appt-mini-info h4    { font-size: 0.88rem; font-weight: 600; font-family: 'DM Sans', sans-serif; }
+.appt-mini-info p     { font-size: 0.78rem; color: var(--text-muted); }
+
+/* --- Doctor schedule day view --- */
+.schedule-day {
+  border-left: 3px solid var(--primary);
+  padding-left: 16px;
+  margin-bottom: 20px;
+}
+.schedule-day h3 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+  font-family: 'DM Sans', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.schedule-slot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+  margin-bottom: 8px;
+}
+.schedule-slot-time {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 52px;
+}
+.schedule-slot-info h4 { font-size: 0.88rem; font-weight: 600; font-family: 'DM Sans', sans-serif; }
+.schedule-slot-info p  { font-size: 0.77rem; color: var(--text-muted); }
+
+/* --- Booking step indicator --- */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.step.completed::after { background: var(--primary); }
+.step-circle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  transition: background .2s, color .2s;
+}
+.step.active   .step-circle { background: var(--primary); color: var(--white); }
+.step.completed .step-circle { background: var(--success); color: var(--white); }
+.step-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  text-align: center;
+  font-weight: 500;
+}
+.step.active   .step-label { color: var(--primary); font-weight: 700; }
+.step.completed .step-label { color: var(--success); }
+
+/* --- Doctor / department selection cards --- */
+.select-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.select-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+  text-decoration: none;
+  color: var(--text-main);
+  display: block;
+}
+.select-card:hover, .select-card.selected {
+  border-color: var(--primary);
+  box-shadow: 0 4px 16px rgba(26,107,138,.15);
+  color: var(--primary);
+}
+.select-card i    { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
+.select-card h3   { font-size: 0.92rem; font-weight: 700; font-family: 'DM Sans', sans-serif; }
+.select-card p    { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+
+/* --- Time slot picker --- */
+.slot-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+.slot-btn {
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  background: var(--white);
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all .18s;
+}
+.slot-btn:hover, .slot-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+}
+.slot-btn.taken {
+  background: #F3F4F6;
+  border-color: #E5E7EB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* --- Booking confirmation card --- */
+.confirm-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  max-width: 540px;
+  margin: 0 auto;
+}
+.confirm-card h2 { font-size: 1.2rem; margin-bottom: 20px; }
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+.confirm-row:last-of-type { border-bottom: none; }
+.confirm-row span:first-child { color: var(--text-muted); font-weight: 500; }
+.confirm-row span:last-child  { font-weight: 600; }
+
+/* --- Availability calendar --- */
+.avail-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.avail-day-header {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 4px;
+  text-transform: uppercase;
+}
+.avail-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  transition: all .18s;
+}
+.avail-day:hover    { border-color: var(--primary); color: var(--primary); }
+.avail-day.unavail  { background: #FEF2F2; border-color: #FECACA; color: var(--danger); }
+.avail-day.past     { opacity: .35; cursor: default; pointer-events: none; }
+.avail-day.today    { border-color: var(--primary); font-weight: 700; color: var(--primary); }
+.avail-day.empty    { border-color: transparent; cursor: default; }
+
+@media (max-width: 768px) {
+  .dash-grid      { grid-template-columns: 1fr; }
+  .welcome-banner { flex-direction: column; text-align: center; }
+  .welcome-banner .banner-icon { display: none; }
+}

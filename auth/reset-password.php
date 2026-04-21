@@ -1,0 +1,134 @@
+<?php
+session_start();
+require_once '../config.php';
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: " . BASE_URL . "/index.php"); exit();
+}
+
+$token   = trim($_GET['token'] ?? $_POST['token'] ?? '');
+$error   = '';
+$success = '';
+$valid   = false;
+$user    = null;
+
+if (empty($token)) {
+    header("Location: " . BASE_URL . "/auth/forgot-password.php"); exit();
+}
+
+// Validate token
+$stmt = mysqli_prepare($conn,
+    "SELECT id, full_name, email FROM users
+     WHERE password_reset_token=? AND password_reset_expires > NOW() AND is_active=1");
+mysqli_stmt_bind_param($stmt, 's', $token);
+mysqli_stmt_execute($stmt);
+$user = mysqli_stmt_get_result($stmt)->fetch_assoc();
+mysqli_stmt_close($stmt);
+
+if (!$user) {
+    $error = 'This reset link is invalid or has expired. Please request a new one.';
+} else {
+    $valid = true;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $valid) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $error = 'Invalid request.';
+    } else {
+        $new_pass = $_POST['new_password']     ?? '';
+        $confirm  = $_POST['confirm_password'] ?? '';
+
+        if (strlen($new_pass) < 6) {
+            $error = 'Password must be at least 6 characters.';
+        } elseif ($new_pass !== $confirm) {
+            $error = 'Passwords do not match.';
+        } else {
+            $hashed = password_hash($new_pass, PASSWORD_BCRYPT);
+            $stmt2  = mysqli_prepare($conn,
+                "UPDATE users SET password=?, password_reset_token=NULL, password_reset_expires=NULL WHERE id=?");
+            mysqli_stmt_bind_param($stmt2, 'si', $hashed, $user['id']);
+            if (mysqli_stmt_execute($stmt2)) {
+                $success = 'Password reset successfully! You can now log in with your new password.';
+                $valid   = false;
+            } else {
+                $error = 'Failed to reset password. Please try again.';
+            }
+            mysqli_stmt_close($stmt2);
+        }
+    }
+}
+
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password — MediBook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/main.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/auth.css">
+</head>
+<body class="auth-page">
+
+<div class="auth-container">
+  <div class="auth-brand">
+    <i class="fa fa-hospital-o"></i>
+    <h1>MediBook</h1>
+    <p>Hospital Appointment Booking System</p>
+  </div>
+
+  <div class="auth-card">
+    <h2>Set New Password</h2>
+    <p class="auth-subtitle">Choose a strong password for your account.</p>
+
+    <?php if ($error): ?>
+      <div class="error-msg"><i class="fa fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
+    <?php if ($success): ?>
+      <div class="success-msg"><i class="fa fa-check-circle"></i> <?= htmlspecialchars($success) ?></div>
+    <?php endif; ?>
+
+    <?php if ($valid): ?>
+    <form method="POST" action="">
+      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+      <input type="hidden" name="token"      value="<?= htmlspecialchars($token) ?>">
+
+      <div class="form-group">
+        <label for="new_password">New Password</label>
+        <div class="input-wrap">
+          <i class="fa fa-lock"></i>
+          <input type="password" id="new_password" name="new_password" placeholder="Min. 6 characters" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="confirm_password">Confirm New Password</label>
+        <div class="input-wrap">
+          <i class="fa fa-lock"></i>
+          <input type="password" id="confirm_password" name="confirm_password" placeholder="Repeat password" required>
+        </div>
+      </div>
+      <button type="submit" class="auth-btn">
+        <i class="fa fa-save"></i> Reset Password
+      </button>
+    </form>
+    <?php endif; ?>
+
+    <div class="auth-footer">
+      <?php if ($success): ?>
+        <a href="<?= BASE_URL ?>/auth/login.php" class="auth-btn" style="display:block;text-align:center;text-decoration:none;">
+          <i class="fa fa-sign-in-alt"></i> Go to Login
+        </a>
+      <?php else: ?>
+        <a href="<?= BASE_URL ?>/auth/forgot-password.php">Request a new reset link</a>
+      <?php endif; ?>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+/* =========================================================
+   forms.css — Form component styles (inside the app layout)
+   ========================================================= */
+
+.form-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  max-width: 640px;
+}
+
+.form-section-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 20px 0 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+.form-section-title:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+
+.field {
+  margin-bottom: 18px;
+}
+.field label {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-main);
+}
+.field label .required { color: var(--danger); margin-left: 2px; }
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="password"],
+.field input[type="tel"],
+.field input[type="date"],
+.field input[type="time"],
+.field input[type="number"],
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  color: var(--text-main);
+  background: var(--white);
+  transition: border-color .18s, box-shadow .18s;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26,107,138,.1);
+}
+.field input.is-error,
+.field select.is-error,
+.field textarea.is-error { border-color: var(--danger); }
+
+.field textarea { resize: vertical; min-height: 90px; }
+.field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236B7280' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+
+.field-hint {
+  font-size: 0.77rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.field-error {
+  font-size: 0.77rem;
+  color: var(--danger);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.fields-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+/* Checkbox / radio */
+.check-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.87rem;
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  background: var(--white);
+  transition: all .18s;
+  user-select: none;
+}
+.check-label input { accent-color: var(--primary); }
+.check-label:has(input:checked) {
+  background: var(--accent);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+/* Profile avatar placeholder */
+.avatar-placeholder {
+  width: 80px; height: 80px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+  .form-card { padding: 20px 16px; }
+  .fields-row, .fields-row-3 { grid-template-columns: 1fr; }
+}
