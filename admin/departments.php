@@ -79,7 +79,7 @@ $edit_id = (int)($_GET['edit'] ?? 0);
 $editing = null;
 if ($edit_id) {
     foreach ($departments as $d) {
-        if ($d['id'] === $edit_id) { $editing = $d; break; }
+        if ((int)$d['id'] === $edit_id) { $editing = $d; break; }
     }
 }
 

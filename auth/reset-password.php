@@ -7,9 +7,8 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $token   = trim($_GET['token'] ?? $_POST['token'] ?? '');
-$error   = '';
-$success = '';
-$valid   = false;
+$error = '';
+$valid = false;
 $user    = null;
 
 if (empty($token)) {
@@ -48,8 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $valid) {
                 "UPDATE users SET password=?, password_reset_token=NULL, password_reset_expires=NULL WHERE id=?");
             mysqli_stmt_bind_param($stmt2, 'si', $hashed, $user['id']);
             if (mysqli_stmt_execute($stmt2)) {
-                $success = 'Password reset successfully! You can now log in with your new password.';
-                $valid   = false;
+                mysqli_stmt_close($stmt2);
+                $_SESSION['flash'] = ['type' => 'success', 'message' => 'Password updated! You can now sign in with your new password.'];
+                header("Location: " . BASE_URL . "/auth/login.php"); exit();
             } else {
                 $error = 'Failed to reset password. Please try again.';
             }
@@ -66,6 +66,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reset Password — MediBook</title>
+  <link rel="icon" type="image/svg+xml" href="<?= BASE_URL ?>/assets/img/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -78,7 +79,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 <div class="auth-left">
   <div class="auth-deco-circle"></div>
   <div class="auth-brand-panel">
-    <div class="logo-mark"><i class="fa fa-hospital-o"></i></div>
+    <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="2" width="4" height="20" rx="2" fill="white"/><rect x="2" y="10" width="20" height="4" rx="2" fill="white"/></svg></div>
     <h1>MediBook</h1>
     <p>Crawford University Hospital<br>Appointment Booking System</p>
   </div>
@@ -97,9 +98,6 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
     <?php if ($error): ?>
       <div class="error-msg"><i class="fa fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?></div>
-    <?php endif; ?>
-    <?php if ($success): ?>
-      <div class="success-msg"><i class="fa fa-check-circle"></i> <?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
 
     <?php if ($valid): ?>
@@ -128,16 +126,11 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     <?php endif; ?>
 
     <div class="auth-footer">
-      <?php if ($success): ?>
-        <a href="<?= BASE_URL ?>/auth/login.php" class="auth-btn" style="margin-top:12px;">
-          <i class="fa fa-sign-in-alt"></i> Go to Sign In
-        </a>
-      <?php else: ?>
-        <a href="<?= BASE_URL ?>/auth/forgot-password.php">Request a new reset link</a>
-      <?php endif; ?>
+      <a href="<?= BASE_URL ?>/auth/forgot-password.php">Request a new reset link</a>
     </div>
   </div>
 </div>
 
+<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body>
 </html>

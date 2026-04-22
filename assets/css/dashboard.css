@@ -141,57 +141,140 @@
 .timeline-body p  { font-size: 0.78rem; color: var(--text-muted); }
 .timeline-badge   { flex-shrink: 0; }
 
-/* ── Schedule page: Doctor's weekly table ───────────────── */
+/* ── Schedule page: Doctor's weekly view ────────────────── */
 .schedule-day {
-  margin-bottom: 28px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: box-shadow .15s;
 }
-.schedule-day-header {
+.schedule-day:hover { box-shadow: var(--shadow-sm); }
+.schedule-day.today {
+  border-color: rgba(0,102,204,.35);
+  box-shadow: 0 0 0 3px rgba(0,102,204,.06);
+}
+.schedule-day-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.schedule-day.empty-day .schedule-day-hd { border-bottom: none; }
+.schedule-day.today .schedule-day-hd { background: #EFF6FF; }
+.schedule-day-name {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--primary-light);
 }
-.schedule-day-header h3 {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
+.schedule-day-name strong {
+  font-size: .92rem;
   font-weight: 700;
-  color: var(--primary);
-  text-transform: uppercase;
-  letter-spacing: .06em;
+  color: var(--text-main);
 }
-.schedule-day-header .day-date {
-  font-size: 0.78rem;
+.schedule-day-date {
+  font-size: .78rem;
   color: var(--text-muted);
-  background: var(--bg);
-  padding: 2px 8px;
+  background: var(--bg-white);
+  padding: 2px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
 }
+.today-pill {
+  font-size: .68rem;
+  font-weight: 700;
+  background: var(--primary);
+  color: #fff;
+  padding: 2px 9px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.schedule-day-count {
+  font-size: .74rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 3px 11px;
+  border-radius: 999px;
+}
+.schedule-no-appts {
+  padding: 13px 20px;
+  font-size: .82rem;
+  color: var(--text-muted);
+}
+.schedule-slots {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Appointment slot card */
 .schedule-slot {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 16px;
+  gap: 16px;
+  padding: 14px 18px;
   border-radius: var(--radius-md);
-  background: var(--bg-white);
-  box-shadow: var(--shadow-xs);
+  background: var(--bg);
   border: 1px solid var(--border);
-  margin-bottom: 8px;
-  transition: border-color .15s;
+  border-left: 3px solid var(--primary);
+  transition: background .15s, border-color .15s;
 }
-.schedule-slot:hover { border-color: var(--primary-light); }
-.schedule-slot-time {
-  font-family: 'Courier New', monospace;
-  font-size: 0.82rem;
+.schedule-slot:hover { background: var(--bg-white); border-color: var(--primary-light); }
+.schedule-slot.status-approved { border-left-color: var(--success); }
+.schedule-slot.status-pending  { border-left-color: #F59E0B; }
+
+.slot-time {
+  font-size: .9rem;
   font-weight: 700;
   color: var(--primary);
-  min-width: 56px;
+  min-width: 48px;
+  flex-shrink: 0;
+  line-height: 1.1;
+}
+.slot-ampm {
+  display: block;
+  font-size: .62rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-top: 2px;
+}
+.slot-divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--border);
+  flex-shrink: 0;
+  margin: 2px 0;
+}
+.slot-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.slot-patient {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--text-main);
   flex-shrink: 0;
 }
-.schedule-slot-info h4 { font-size: 0.875rem; font-weight: 600; }
-.schedule-slot-info p  { font-size: 0.77rem; color: var(--text-muted); margin-top: 1px; }
+.slot-reason {
+  font-size: .82rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.slot-sep { margin: 0 7px; color: var(--border); font-size: .9rem; }
 
 /* ── Booking Step Indicator ─────────────────────────────── */
 .step-indicator {

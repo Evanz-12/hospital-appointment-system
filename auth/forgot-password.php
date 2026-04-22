@@ -49,6 +49,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Forgot Password — MediBook</title>
+  <link rel="icon" type="image/svg+xml" href="<?= BASE_URL ?>/assets/img/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -61,7 +62,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 <div class="auth-left">
   <div class="auth-deco-circle"></div>
   <div class="auth-brand-panel">
-    <div class="logo-mark"><i class="fa fa-hospital-o"></i></div>
+    <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="2" width="4" height="20" rx="2" fill="white"/><rect x="2" y="10" width="20" height="4" rx="2" fill="white"/></svg></div>
     <h1>MediBook</h1>
     <p>Crawford University Hospital<br>Appointment Booking System</p>
   </div>
@@ -108,5 +109,6 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
   </div>
 </div>
 
+<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@ if (empty($initials)) $initials = 'A';
 ?>
 <div class="sidebar">
   <div class="sidebar-brand">
-    <div class="brand-icon"><i class="fa fa-hospital-o"></i></div>
+    <div class="brand-icon"><svg viewBox="0 0 24 24" fill="none" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="2" width="4" height="20" rx="2" fill="white"/><rect x="2" y="10" width="20" height="4" rx="2" fill="white"/></svg></div>
     <div>
       <span class="brand-name">MediBook</span>
       <span class="brand-sub">Hospital System</span>

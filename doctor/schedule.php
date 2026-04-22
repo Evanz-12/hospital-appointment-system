@@ -64,32 +64,55 @@ include '../includes/sidebar-doctor.php';
 </div>
 
 <?php
-$day = clone $monday;
-$has_any = false;
+$today_str = date('Y-m-d');
+$day       = clone $monday;
+$has_any   = false;
 for ($i = 0; $i < 7; $i++):
-  $d_str = $day->format('Y-m-d');
-  $d_name = $day->format('l, d M Y');
-  $slots = $by_date[$d_str] ?? [];
-  if (!empty($slots)) { $has_any = true; }
+  $d_str    = $day->format('Y-m-d');
+  $d_full   = $day->format('l');
+  $d_short  = $day->format('d M Y');
+  $slots    = $by_date[$d_str] ?? [];
+  $is_today = ($d_str === $today_str);
+  $has_appts = !empty($slots);
+  if ($has_appts) { $has_any = true; }
 ?>
-<div class="schedule-day">
-  <h3><?= htmlspecialchars($d_name) ?></h3>
-  <?php if (empty($slots)): ?>
-    <p style="font-size:.82rem;color:var(--text-muted);padding:4px 0;">No appointments</p>
+<div class="schedule-day <?= $is_today ? 'today' : '' ?> <?= !$has_appts ? 'empty-day' : '' ?>">
+
+  <div class="schedule-day-hd">
+    <div class="schedule-day-name">
+      <?php if ($is_today): ?>
+        <span class="today-pill">Today</span>
+      <?php endif; ?>
+      <strong><?= htmlspecialchars($d_full) ?></strong>
+      <span class="schedule-day-date"><?= htmlspecialchars($d_short) ?></span>
+    </div>
+    <?php if ($has_appts): ?>
+      <span class="schedule-day-count"><?= count($slots) ?> appointment<?= count($slots) > 1 ? 's' : '' ?></span>
+    <?php endif; ?>
+  </div>
+
+  <?php if (!$has_appts): ?>
+    <p class="schedule-no-appts">No appointments scheduled</p>
   <?php else: ?>
+  <div class="schedule-slots">
     <?php foreach ($slots as $s): ?>
-    <div class="schedule-slot">
-      <span class="schedule-slot-time"><?= date('g:i A', strtotime($s['appointment_time'])) ?></span>
-      <div class="schedule-slot-info" style="flex:1;">
-        <h4><?= htmlspecialchars($s['patient_name']) ?></h4>
-        <p><?= $s['reason'] ? htmlspecialchars(substr($s['reason'], 0, 80)) : 'No reason given' ?>
-          <?php if ($s['phone']): ?> &mdash; <?= htmlspecialchars($s['phone']) ?><?php endif; ?>
-        </p>
+    <div class="schedule-slot status-<?= $s['status'] ?>">
+      <div class="slot-time">
+        <?= date('g:i', strtotime($s['appointment_time'])) ?>
+        <span class="slot-ampm"><?= date('A', strtotime($s['appointment_time'])) ?></span>
       </div>
-      <span class="badge badge-<?= $s['status'] ?>"><?= $s['status'] ?></span>
+      <div class="slot-divider"></div>
+      <div class="slot-body">
+        <span class="slot-patient"><?= htmlspecialchars($s['patient_name']) ?></span>
+        <span class="slot-sep">&middot;</span>
+        <span class="slot-reason"><?= $s['reason'] ? htmlspecialchars(substr($s['reason'], 0, 80)) : 'No reason given' ?></span>
+      </div>
+      <span class="badge badge-<?= $s['status'] ?>"><?= ucfirst($s['status']) ?></span>
     </div>
     <?php endforeach; ?>
+  </div>
   <?php endif; ?>
+
 </div>
 <?php
   $day->modify('+1 day');

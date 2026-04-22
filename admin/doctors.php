@@ -51,17 +51,29 @@ include '../includes/sidebar-admin.php';
   <div class="table-wrapper">
     <table>
       <thead>
-        <tr><th>Name</th><th>Email</th><th>Phone</th><th>Department</th><th>Specialisation</th><th>Avail. Days</th><th>Status</th><th>Actions</th></tr>
+        <tr>
+          <th>Doctor</th>
+          <th>Department</th>
+          <th>Available Days</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
       </thead>
       <tbody>
-        <?php foreach ($doctors as $d): ?>
+        <?php foreach ($doctors as $d):
+          $days = array_map('trim', explode(',', $d['available_days']));
+          $days_str = implode(' &middot; ', array_map('htmlspecialchars', $days));
+        ?>
         <tr>
-          <td><strong><?= htmlspecialchars($d['full_name']) ?></strong></td>
-          <td><?= htmlspecialchars($d['email']) ?></td>
-          <td><?= htmlspecialchars($d['phone'] ?? '—') ?></td>
-          <td><?= htmlspecialchars($d['department']) ?></td>
-          <td><?= htmlspecialchars($d['specialisation'] ?? '—') ?></td>
-          <td style="font-size:.8rem;"><?= htmlspecialchars($d['available_days']) ?></td>
+          <td>
+            <strong><?= htmlspecialchars($d['full_name']) ?></strong>
+            <span style="display:block;font-size:.78rem;color:var(--text-muted);margin-top:2px;"><?= htmlspecialchars($d['email']) ?></span>
+          </td>
+          <td>
+            <?= htmlspecialchars($d['department']) ?>
+            <span style="display:block;font-size:.78rem;color:var(--text-muted);margin-top:2px;"><?= htmlspecialchars($d['specialisation'] ?? '—') ?></span>
+          </td>
+          <td style="font-size:.8rem;color:var(--text-muted);"><?= $days_str ?></td>
           <td>
             <span class="badge <?= $d['is_active'] ? 'badge-approved' : 'badge-cancelled' ?>">
               <?= $d['is_active'] ? 'Active' : 'Inactive' ?>

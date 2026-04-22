@@ -7,8 +7,7 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
-$error   = '';
-$success = '';
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -44,7 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "INSERT INTO users (full_name, email, password, phone, role) VALUES (?, ?, ?, ?, 'patient')");
                 mysqli_stmt_bind_param($stmt2, 'ssss', $full_name, $email, $hashed, $phone);
                 if (mysqli_stmt_execute($stmt2)) {
-                    $success = 'Account created successfully! You can now log in.';
+                    mysqli_stmt_close($stmt2);
+                    $_SESSION['flash'] = ['type' => 'success', 'message' => 'Account created! Welcome to MediBook — please sign in.'];
+                    header("Location: " . BASE_URL . "/auth/login.php"); exit();
                 } else {
                     $error = 'Registration failed. Please try again.';
                 }
@@ -62,6 +63,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Account — MediBook</title>
+  <link rel="icon" type="image/svg+xml" href="<?= BASE_URL ?>/assets/img/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -75,7 +77,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 <div class="auth-left">
   <div class="auth-deco-circle"></div>
   <div class="auth-brand-panel">
-    <div class="logo-mark"><i class="fa fa-hospital-o"></i></div>
+    <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="2" width="4" height="20" rx="2" fill="white"/><rect x="2" y="10" width="20" height="4" rx="2" fill="white"/></svg></div>
     <h1>MediBook</h1>
     <p>Crawford University Hospital<br>Appointment Booking System</p>
   </div>
@@ -110,11 +112,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     <?php if ($error): ?>
       <div class="error-msg"><i class="fa fa-exclamation-circle"></i> <?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
-    <?php if ($success): ?>
-      <div class="success-msg"><i class="fa fa-check-circle"></i> <?= htmlspecialchars($success) ?></div>
-    <?php endif; ?>
 
-    <?php if (!$success): ?>
     <form method="POST" action="">
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
@@ -166,13 +164,6 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         <i class="fa fa-user-plus"></i> Create Account
       </button>
     </form>
-    <?php endif; ?>
-
-    <?php if ($success): ?>
-      <a href="<?= BASE_URL ?>/auth/login.php" class="auth-btn" style="margin-top:16px;">
-        <i class="fa fa-sign-in-alt"></i> Go to Sign In
-      </a>
-    <?php endif; ?>
 
     <div class="auth-footer">
       Already have an account? <a href="<?= BASE_URL ?>/auth/login.php">Sign in</a>
@@ -180,5 +171,6 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
   </div>
 </div>
 
+<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
 </body>
 </html>
