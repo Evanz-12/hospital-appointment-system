@@ -1,5 +1,13 @@
 /* main.js — Shared JS: alerts, sidebar toggle, modal, confirm */
 
+// Ensure viewport-fit=cover for safe-area-inset support on iOS/Android
+(function () {
+  var meta = document.querySelector('meta[name="viewport"]');
+  if (meta && meta.content.indexOf('viewport-fit') === -1) {
+    meta.content += ',viewport-fit=cover';
+  }
+})();
+
 // Auto-wrap tables in scrollable container on mobile
 (function () {
   if (window.innerWidth > 768) return;
