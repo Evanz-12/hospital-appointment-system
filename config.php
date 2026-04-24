@@ -1,19 +1,9 @@
 <?php
-$_db_url = getenv('MYSQL_PUBLIC_URL');
-if ($_db_url) {
-    $_p = parse_url($_db_url);
-    define('DB_HOST', $_p['host']);
-    define('DB_USER', $_p['user']);
-    define('DB_PASS', $_p['pass']);
-    define('DB_NAME', ltrim($_p['path'], '/'));
-    define('DB_PORT', $_p['port'] ?? 3306);
-} else {
-    define('DB_HOST', getenv('MYSQL_HOST') ?: 'localhost');
-    define('DB_USER', getenv('MYSQL_USER') ?: 'root');
-    define('DB_PASS', getenv('MYSQL_PASSWORD') ?: '');
-    define('DB_NAME', getenv('MYSQL_DATABASE') ?: 'hospital_db');
-    define('DB_PORT', (int)(getenv('MYSQL_PORT') ?: 3306));
-}
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');
+define('DB_NAME', getenv('DB_NAME') ?: 'hospital_db');
+define('DB_PORT', (int)(getenv('DB_PORT') ?: 3306));
 
 define('BASE_URL', getenv('APP_URL') ?: '/hospital-appointment-system');
 
