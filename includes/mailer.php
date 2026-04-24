@@ -27,6 +27,9 @@ function resolve_doctor_email(string $email): string {
 }
 
 function make_mailer(): PHPMailer {
+    if (getenv('MAIL_ENABLED') === 'false') {
+        throw new Exception('Mail disabled');
+    }
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
