@@ -13,7 +13,7 @@ define('MAIL_FROM',          'medibook.hospital@gmail.com');
 define('MAIL_FROM_NAME',     'MediBook Hospital');
 define('MAIL_PASS',          'xulmgfozwyhaiovu');  // app password (spaces removed)
 define('APP_NAME',           'MediBook');
-define('APP_URL',            'http://localhost/hospital-appointment-system');
+define('APP_URL', getenv('APP_URL') ?: 'http://localhost/hospital-appointment-system');
 define('DOCTOR_MAIL_DOMAIN', 'medibook.com');
 
 // Doctor work emails (@medibook.com) are display-only — reroute them to the
