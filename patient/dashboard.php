@@ -51,7 +51,7 @@ include '../includes/sidebar-patient.php';
 </div>
 
 <!-- Stats row -->
-<div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px;">
+<div class="stats-grid" style="margin-bottom:24px;">
   <div class="stat-card">
     <div class="stat-icon teal"><i class="fa fa-calendar-check"></i></div>
     <div class="stat-info"><h3><?= ($stats['approved'] ?? 0) + ($stats['pending'] ?? 0) ?></h3><p>Upcoming</p></div>
