@@ -595,8 +595,19 @@
   .doctor-grid    { grid-template-columns: 1fr 1fr; }
   .step-indicator { padding: 16px 12px; }
   .step-label     { display: none; }
+  .quick-actions  { gap: 10px; }
+  .quick-action-card { min-width: 0; flex: 1 1 calc(50% - 5px); }
+  .schedule-day   { break-inside: avoid; }
+  .confirm-card-row { flex-direction: column; gap: 2px; }
+  .confirm-card-row .label { min-width: unset; }
+  .appt-meta      { flex-wrap: wrap; gap: 4px 12px; }
 }
 @media (max-width: 480px) {
-  .doctor-grid  { grid-template-columns: 1fr; }
-  .confirm-card { padding: 20px 16px; }
+  .doctor-grid    { grid-template-columns: 1fr; }
+  .confirm-card   { padding: 20px 16px; }
+  .quick-action-card { flex: 1 1 100%; }
+  .step-dot       { width: 28px; height: 28px; font-size: 0.75rem; }
+  .booking-card   { padding: 20px 16px; }
+  .welcome-banner { padding: 20px 18px; }
+  .welcome-banner h2 { font-size: 1.05rem; }
 }

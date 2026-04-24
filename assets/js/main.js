@@ -1,5 +1,19 @@
 /* main.js — Shared JS: alerts, sidebar toggle, modal, confirm */
 
+// Auto-wrap tables in scrollable container on mobile
+(function () {
+  if (window.innerWidth > 768) return;
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.main-content table').forEach(function (tbl) {
+      if (tbl.parentElement.classList.contains('table-responsive')) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'table-responsive';
+      tbl.parentNode.insertBefore(wrap, tbl);
+      wrap.appendChild(tbl);
+    });
+  });
+})();
+
 // Auto-dismiss flash messages after 4s
 (function () {
   var flash = document.getElementById('flashMsg');

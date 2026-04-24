@@ -40,9 +40,9 @@ if (empty($initials)) $initials = 'D';
   <header class="topbar">
     <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
     <div class="topbar-title"><?= htmlspecialchars($page_title ?? '') ?></div>
-    <div class="topbar-user">
+    <a class="topbar-user" href="<?= BASE_URL ?>/doctor/profile.php" style="text-decoration:none;">
       <span class="topbar-user-name"><?= htmlspecialchars($name) ?></span>
       <div class="topbar-avatar accent"><?= htmlspecialchars($initials) ?></div>
-    </div>
+    </a>
   </header>
   <div class="main-content">

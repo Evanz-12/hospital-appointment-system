@@ -612,6 +612,13 @@ tbody td.muted { color: var(--text-muted); font-size: 0.83rem; }
 .empty-state h3 { font-size: 1rem; color: var(--text-secondary); margin-bottom: 6px; }
 .empty-state p  { font-size: 0.875rem; }
 
+/* ── Global overflow guard ──────────────────────────────── */
+@media (max-width: 768px) {
+  body { overflow-x: hidden; }
+  .app-wrapper { overflow-x: hidden; max-width: 100vw; }
+  .main-content { overflow-x: hidden; }
+}
+
 /* ── Sidebar overlay (mobile) ───────────────────────────── */
 .sidebar-overlay {
   display: none;
