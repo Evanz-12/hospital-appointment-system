@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 email_password_reset($email, $user['full_name'], $token);
             }
-            $success = 'If an account exists with that email, a reset link has been sent. Check your inbox (and spam folder).';
+            $success = 'If an account exists with that email, a reset link has been generated. Please contact the hospital admin to receive it.';
         }
     }
 }

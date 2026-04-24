@@ -97,7 +97,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'confirm') {
                 email_doctor_new_booking($eq_data['doctor_email'], $eq_data['doctor_name'], $appt_info);
             }
 
-            $_SESSION['flash'] = ['type' => 'success', 'message' => 'Appointment booked successfully! A confirmation email has been sent.'];
+            $_SESSION['flash'] = ['type' => 'success', 'message' => 'Appointment booked successfully! Awaiting admin approval.'];
             header("Location: " . BASE_URL . "/patient/appointments.php");
             exit();
         } else {
