@@ -4,3 +4,5 @@ RUN install-php-extensions mysqli mbstring openssl pdo_mysql
 
 WORKDIR /app
 COPY . .
+
+CMD ["frankenphp", "run", "--config", "/app/Caddyfile"]
