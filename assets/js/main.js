@@ -11,22 +11,31 @@
   }
 })();
 
-// Sidebar toggle (mobile)
+// Sidebar toggle (mobile) with overlay
 (function () {
-  var toggle = document.getElementById('sidebarToggle');
+  var toggle  = document.getElementById('sidebarToggle');
   var sidebar = document.querySelector('.sidebar');
   if (!toggle || !sidebar) return;
+
+  var overlay = document.createElement('div');
+  overlay.className = 'sidebar-overlay';
+  document.body.appendChild(overlay);
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
   toggle.addEventListener('click', function () {
-    sidebar.classList.toggle('open');
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
   });
-  // Close sidebar when clicking outside on mobile
-  document.addEventListener('click', function (e) {
-    if (sidebar.classList.contains('open') &&
-        !sidebar.contains(e.target) &&
-        e.target !== toggle) {
-      sidebar.classList.remove('open');
-    }
-  });
+  overlay.addEventListener('click', closeSidebar);
 })();
 
 // Generic confirmation modal

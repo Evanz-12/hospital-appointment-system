@@ -394,21 +394,37 @@ while ($row = mysqli_fetch_assoc($res)) { $depts[] = $row; }
     .footer-copy a:hover { color: #fff; }
 
     @media(max-width: 960px) {
-      .hero { flex-direction: column; padding: 60px 5%; }
-      .hero-visual { width: 100%; max-width: 420px; }
+      .hero { flex-direction: column; padding: 60px 5%; align-items: flex-start; }
+      .hero-visual { width: 100%; max-width: 420px; align-self: center; }
       .hero h1 { font-size: 2.2rem; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
     }
     @media(max-width: 768px) {
-      .features-grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 1.9rem; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 1.85rem; }
       .section-title { font-size: 1.5rem; }
       .footer-inner { grid-template-columns: 1fr; }
       .footer-copy { text-align: left; }
-      .hero-stats { gap: 20px; }
+      .hero-stats { gap: 20px; flex-wrap: wrap; }
+    }
+    @media(max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero { padding: 48px 5% 40px; }
+      .hero h1 { font-size: 1.7rem; }
+      .hero p { font-size: 0.95rem; }
+      .hero-btns a { padding: 11px 20px; font-size: 0.85rem; }
+      .hero-btns { gap: 8px; }
+      .hero-stats { padding-top: 24px; margin-top: 28px; }
+      .section-title { font-size: 1.4rem; }
+      .cta-section h2 { font-size: 1.6rem; }
     }
     @media(max-width: 480px) {
-      .landing-nav { padding: 0 20px; }
-      .features-section, .depts-section, .cta-section { padding: 52px 5%; }
+      .landing-nav { padding: 0 16px; height: 60px; }
+      .nav-links a:not(.btn-nav) { display: none; }
+      .features-section, .depts-section, .cta-section { padding: 48px 5%; }
+      .depts-grid { grid-template-columns: 1fr; }
+      .hero-stat-item h4 { font-size: 1.25rem; }
     }
   </style>
 </head>
