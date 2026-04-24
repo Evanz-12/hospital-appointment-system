@@ -30,8 +30,8 @@ $dept_id = $dept ? $dept['id'] : null;
 
 if ($doctor_user_id && $dept_id) {
     $stmt = mysqli_prepare($conn,
-        "INSERT IGNORE INTO doctors (user_id, department_id, specialisation, available_days, available_time_start, available_time_end)
-         VALUES (?, ?, 'General Practice', 'Mon,Tue,Wed,Thu,Fri', '08:00:00', '17:00:00')");
+        "INSERT IGNORE INTO doctors (user_id, department_id, specialisation, available_days)
+         VALUES (?, ?, 'General Practice', 'Mon,Tue,Wed,Thu,Fri')");
     mysqli_stmt_bind_param($stmt, 'ii', $doctor_user_id, $dept_id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
