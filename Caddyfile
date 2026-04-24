@@ -1,6 +1,7 @@
 {
     frankenphp
     admin off
+    order php_server last
 }
 
 :{$PORT:8080} {
