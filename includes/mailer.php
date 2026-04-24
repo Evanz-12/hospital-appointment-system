@@ -35,6 +35,7 @@ function make_mailer(): PHPMailer {
     $mail->Password   = MAIL_PASS;
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
+    $mail->Timeout    = 5;
     $mail->setFrom(MAIL_FROM, MAIL_FROM_NAME);
     $mail->isHTML(true);
     $mail->CharSet = 'UTF-8';
